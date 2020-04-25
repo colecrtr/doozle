@@ -2,6 +2,7 @@ import * as React from "react";
 import { setTitle } from "helpers/title";
 import { auth } from "services/firebase";
 import { Title, Field, Label, Control, Input, Button, Help, Subtitle } from "bloomer";
+import { trackPromise } from "react-promise-tracker";
 
 interface IState {
     isLoading: Boolean,
@@ -35,7 +36,7 @@ export default class Login extends React.Component<any, IState> {
             url: `${window.location.protocol}//${window.location.host}/session/authenticate`,
             handleCodeInApp: true,
         };
-        auth().sendSignInLinkToEmail(this.state.email, actionCodeSettings)
+        const sendEmailPromise = auth().sendSignInLinkToEmail(this.state.email, actionCodeSettings)
             .then(() => {
                 window.localStorage.setItem("emailForAuthenticateHandler", this.state.email);
                 this.setState({ emailSent: true, isLoading: false });
@@ -45,6 +46,7 @@ export default class Login extends React.Component<any, IState> {
                     this.setState({ emailInvalid: true, isLoading: false })
                 }
             });
+        trackPromise(sendEmailPromise);
     }
 
     render() {
