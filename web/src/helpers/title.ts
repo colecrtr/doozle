@@ -1,4 +1,4 @@
-function setTitle(newTitle: string): void {
+export function setTitle(newTitle: string): void {
     const base = "Doozle";
 
     if (newTitle) {
@@ -7,5 +7,3 @@ function setTitle(newTitle: string): void {
         window.document.title = base;
     }
 }
-
-export { setTitle };
