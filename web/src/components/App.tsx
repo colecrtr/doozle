@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Header from "./Header";
 
-import "bulma";
 import './App.scss';
 
 class App extends React.PureComponent {
