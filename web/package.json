@@ -23,6 +23,8 @@
     "css-loader": "^3.5.3",
     "html-webpack-plugin": "^4.2.0",
     "node-sass": "^4.14.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
     "style-loader": "^1.2.0",
     "tslint": "^6.1.1",
     "tslint-immutable": "^6.0.1",
@@ -34,6 +36,8 @@
   "dependencies": {
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "bloomer": "^0.6.5",
+    "bulma": "^0.8.2",
     "firebase": "^7.14.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
