@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Header from "./Header";
+import { Container, Title } from "bloomer";
 
 import './App.scss';
 
@@ -8,9 +9,9 @@ class App extends React.PureComponent {
         return (
             <React.StrictMode>
                 <Header />
-                <div>
-                    <h1>Hello World!</h1>
-                </div>
+                <Container isFluid>
+                    <Title>Hello World!</Title>
+                </Container>
             </React.StrictMode>
         );
     }
