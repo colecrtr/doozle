@@ -1,0 +1,12 @@
+node_modules/
+
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+!webpack.config.js
+
+# Typescript v1 declaration files
+typings/
+
+# Build directory
+dist/
