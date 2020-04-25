@@ -54,10 +54,7 @@ export default class Login extends React.Component<any, IState> {
             <>
                 <Title>Login / Register</Title>
                 {this.state.emailSent ? (
-                    <>
-                        <Subtitle style={{ marginTop: "1rem", marginBottom: 0 }}>Success! Login link sent to {this.state.email}</Subtitle>
-                        <p>It could take a few minutes to reach your inbox.</p>
-                    </>
+                    <Subtitle style={{ marginTop: "1rem", marginBottom: 0 }}>Success! We sent a login link to {this.state.email}</Subtitle>
                 ) : (
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <Field>
