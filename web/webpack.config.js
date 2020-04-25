@@ -7,7 +7,11 @@ module.exports = {
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js'],
+        alias: {
+            helpers: path.resolve(__dirname, "src/helpers/"),
+            services: path.resolve(__dirname, "src/services/"),
+        },
     },
     module: {
         rules: [
@@ -37,5 +41,9 @@ module.exports = {
         splitChunks: {
             chunks: 'all',
         },
+    },
+    devServer: {
+        port: 3000,
+        historyApiFallback: true,
     },
 };

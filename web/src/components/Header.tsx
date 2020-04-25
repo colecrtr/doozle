@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Navbar, NavbarItem, NavbarBrand } from "bloomer";
+import { Navbar, NavbarItem, NavbarBrand, NavbarMenu, NavbarEnd, Button } from "bloomer";
 
 
 export default class Header extends React.Component {
@@ -8,9 +8,14 @@ export default class Header extends React.Component {
         return (
             <header>
                 <Navbar>
-                    <NavbarItem>
-                        <NavbarBrand style={{ fontSize: "1.25rem" }}>Doozle</NavbarBrand>
-                    </NavbarItem>
+                    <NavbarBrand>
+                        <NavbarItem style={{ fontSize: "1.25rem" }}>Doozle</NavbarItem>
+                    </NavbarBrand>
+                    <NavbarMenu>
+                        <NavbarEnd>
+                            <NavbarItem><Button href="/session">Login / Register</Button></NavbarItem>
+                        </NavbarEnd>
+                    </NavbarMenu>
                 </Navbar>
             </header>
         );
