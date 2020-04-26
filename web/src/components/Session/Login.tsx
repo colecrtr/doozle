@@ -56,12 +56,12 @@ export default class Login extends React.Component<any, IState> {
                 {this.state.emailSent ? (
                     <Subtitle style={{ marginTop: "1rem", marginBottom: 0 }}>Success! We sent a login link to {this.state.email}</Subtitle>
                 ) : (
-                    <form onSubmit={this.onSubmit.bind(this)}>
+                    <form onSubmit={this.onSubmit.bind(this)} style={{ maxWidth: "400px" }}>
                         <Field>
                             <Label>Email</Label>
                             <Control>
                                 <Input 
-                                    type="email" 
+                                    type="email"
                                     placeholder="cole@example.com" 
                                     disabled={this.state.isLoading}
                                     value={this.state.email}
@@ -80,7 +80,7 @@ export default class Login extends React.Component<any, IState> {
                         </Field>
                         <Field>
                             <Control>
-                                <Button type="submit" isColor="primary" isLoading={this.state.isLoading}>Request login link</Button>
+                                <Button type="submit" isColor="success" isLoading={this.state.isLoading}>Request login link</Button>
                             </Control>
                         </Field>
                     </form>
