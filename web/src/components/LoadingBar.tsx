@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BarLoader } from "react-spinners";
-import { palette } from "./theme";
+import { palette } from "theme";
 import { usePromiseTracker } from "react-promise-tracker";
 
 const LoadingBar = (_props: any) => {

@@ -11,6 +11,7 @@ module.exports = {
         alias: {
             helpers: path.resolve(__dirname, "src/helpers/"),
             services: path.resolve(__dirname, "src/services/"),
+            theme: path.resolve(__dirname, "src/theme"),
         },
     },
     module: {
