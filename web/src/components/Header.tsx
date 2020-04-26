@@ -22,7 +22,7 @@ export default class Header extends React.Component<any, IState> {
                     </NavbarBrand>
                     <NavbarMenu isActive={this.state.isBurgerMenuActive} onClick={this.toggleBurgerMenu.bind(this)} >
                         <NavbarEnd>
-                            <NavbarItem><Button href="/session" isColor="success">Login / Register</Button></NavbarItem>
+                            <NavbarItem><Button href="/login" isColor="success">Login / Register</Button></NavbarItem>
                         </NavbarEnd>
                     </NavbarMenu>
                 </Navbar>

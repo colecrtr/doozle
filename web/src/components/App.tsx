@@ -18,7 +18,8 @@ class App extends React.PureComponent {
                         <Column isSize={{desktop: 6, tablet: 9, mobile: 12}}>
                             <BrowserRouter>
                                 <Switch>
-                                    <Route path="/session" component={Session} />
+                                    <Route path="/login" component={Session} />
+                                    <Route path="/authenticate" component={Session} />
                                 </Switch>
                             </BrowserRouter>
                         </Column>

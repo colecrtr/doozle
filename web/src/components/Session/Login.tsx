@@ -7,16 +7,16 @@ import { trackPromise } from "react-promise-tracker";
 interface IState {
     isLoading: Boolean,
     email: String,
-    emailInvalid: Boolean,
-    emailSent: Boolean,
+    isEmailInvalid: Boolean,
+    isEmailSent: Boolean,
 }
 
 export default class Login extends React.Component<any, IState> {
     readonly state = {
         isLoading: false,
         email: "",
-        emailInvalid: false,
-        emailSent: false,
+        isEmailInvalid: false,
+        isEmailSent: false,
     };
 
     componentDidMount() {
@@ -30,20 +30,23 @@ export default class Login extends React.Component<any, IState> {
 
     onSubmit(event: React.DetailedHTMLProps<any, any>) {
         event.preventDefault();
-        this.setState({emailInvalid: false, isLoading: true});
+        this.setState({isEmailInvalid: false, isLoading: true});
 
         const actionCodeSettings = {
-            url: `${window.location.protocol}//${window.location.host}/session/authenticate`,
+            url: `${window.location.protocol}//${window.location.host}/authenticate`,
             handleCodeInApp: true,
         };
         const sendEmailPromise = auth().sendSignInLinkToEmail(this.state.email, actionCodeSettings)
             .then(() => {
+                /* Email sent successfully, store the email address for the authenticate handler 
+                 * to use to make it more seamless for the user to login.
+                 */
                 window.localStorage.setItem("emailForAuthenticateHandler", this.state.email);
-                this.setState({ emailSent: true, isLoading: false });
+                this.setState({ isEmailSent: true, isLoading: false });
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-email") {
-                    this.setState({ emailInvalid: true, isLoading: false })
+                    this.setState({ isEmailInvalid: true, isLoading: false })
                 }
             });
         trackPromise(sendEmailPromise);
@@ -53,7 +56,7 @@ export default class Login extends React.Component<any, IState> {
         return (
             <>
                 <Title>Login / Register</Title>
-                {this.state.emailSent ? (
+                {this.state.isEmailSent ? (
                     <Subtitle style={{ marginTop: "1rem", marginBottom: 0 }}>Success! We sent a login link to {this.state.email}</Subtitle>
                 ) : (
                     <form onSubmit={this.onSubmit.bind(this)} style={{ maxWidth: "400px" }}>
@@ -66,12 +69,12 @@ export default class Login extends React.Component<any, IState> {
                                     disabled={this.state.isLoading}
                                     value={this.state.email}
                                     onChange={this.onEmailChange.bind(this)}
-                                    isColor={this.state.emailInvalid ? "danger" : ""}
+                                    isColor={this.state.isEmailInvalid ? "danger" : ""}
                                     required
                                 />
                             </Control>
                             <Help>
-                                {this.state.emailInvalid ? (
+                                {this.state.isEmailInvalid ? (
                                     "The email you entered is invalid. We will send a secure login and/or registration link to this email so please make sure it is correct."
                                 ) : (
                                     "We will send a secure login and/or registration link to this email."
