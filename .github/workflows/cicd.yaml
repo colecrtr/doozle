@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node12.13.0-chrome80-ff74
+      image: cypress/included:4.5.0
       options: --user 1001
     steps:
       - uses: actions/checkout@master
@@ -14,8 +14,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: ( cd web && npm install && (npm start &) )
-      - run: cypress run --project=web --browser=chrome
-      - run: cypress run --project=web --browser=firefox
+      - run: cypress run --project=web
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: test
