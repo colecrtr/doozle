@@ -14,14 +14,8 @@ jobs:
         with:
           node-version: '12.x'
       - run: ( cd web && npm install && (npm start &) )
-      - uses: cypress-io/github-action@v1
-        with:
-          browser: chrome
-          command: cypress run --project=web
-      - uses: cypress-io/github-action@v1
-        with:
-          browser: firefox
-          command: cypress run --project=web
+      - run: cypress run --project=web --browser=chrome
+      - run: cypress run --project=web --browser=firefox
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: test
