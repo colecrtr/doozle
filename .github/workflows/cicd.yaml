@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: '12.x'
-      - run: ( cd web && npm install && npm start )
+      - run: ( cd web && npm install && (npm start &) )
       - uses: cypress-io/github-action@v1
         with:
           browser: chrome
