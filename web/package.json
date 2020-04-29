@@ -25,7 +25,6 @@
     "@types/react-router-dom": "^5.1.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
-    "cypress": "^4.4.1",
     "html-webpack-plugin": "^4.2.0",
     "node-sass": "^4.14.0",
     "sass": "^1.26.5",
