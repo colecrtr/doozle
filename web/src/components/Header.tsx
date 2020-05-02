@@ -17,7 +17,7 @@ export default class Header extends React.Component<any, IState> {
             <header>
                 <Navbar>
                     <NavbarBrand>
-                        <NavbarItem style={{ fontSize: "1.25rem" }}>Doozle</NavbarItem>
+                        <NavbarItem href="/" style={{ fontSize: "1.25rem" }}>Doozle</NavbarItem>
                         <NavbarBurger isActive={this.state.isBurgerMenuActive} onClick={this.toggleBurgerMenu.bind(this)} />
                     </NavbarBrand>
                     <NavbarMenu isActive={this.state.isBurgerMenuActive} onClick={this.toggleBurgerMenu.bind(this)} >
