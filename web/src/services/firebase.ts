@@ -5,6 +5,7 @@ import "firebase/firestore";
 import "firebase/functions";
 
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyBui2yy-H2b_rQ_jbGe2ivspMklVOc0lqg",
     authDomain: "doozle.firebaseapp.com",
@@ -30,4 +31,4 @@ if (location.hostname === "localhost") {
     functions.useFunctionsEmulator("http://localhost:5001")
 }
 
-export { auth, db, functions };
+export { firebase, auth, db, functions };

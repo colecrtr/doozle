@@ -1,6 +1,18 @@
 rules_version = '2';
 service cloud.firestore {
+  function userIsAuthenticated() {
+    return request.auth.uid != null;
+  }
+  function isAuthUser(uid) {
+    return userIsAuthenticated() && request.auth.uid == uid;
+  }
+
   match /databases/{database}/documents {
+    match /UserProfiles/{userId} {
+      allow read: if userIsAuthenticated();
+      allow write: if isAuthUser(userId) && request.resource.data.name.size() <= 15;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

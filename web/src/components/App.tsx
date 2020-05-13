@@ -4,10 +4,31 @@ import { Container, Columns, Column } from "bloomer";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Session from "./Session";
 import LoadingBar from "./LoadingBar";
+import { auth } from "services/firebase";
+import UserProfile from 'models/UserProfile';
 
 import './App.scss';
+interface IState {
+    authUserProfile: null | UserProfile
+}
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<any, IState> {
+    state = {
+        authUserProfile: null,
+    }
+
+    async componentDidMount() {
+        auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const authUserProfile = await UserProfile.getOrCreate(user.uid);
+
+                if (authUserProfile.exists) {
+                    this.setState({ authUserProfile });
+                }
+            }
+        });
+    }
+
     render() {
         return (
             <React.StrictMode>

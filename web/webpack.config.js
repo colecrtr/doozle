@@ -12,6 +12,7 @@ module.exports = {
             helpers: path.resolve(__dirname, "src/helpers/"),
             services: path.resolve(__dirname, "src/services/"),
             theme: path.resolve(__dirname, "src/theme"),
+            models: path.resolve(__dirname, "src/models/"),
         },
     },
     module: {
