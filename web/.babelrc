@@ -1,16 +1,16 @@
 {
-    "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "targets": { "esmodules": true }
-            }
-        ],
-        "@babel/preset-typescript",
-        "@babel/preset-react"
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": { "esmodules": true }
+      }
     ],
-    "plugins": [
-        "@babel/proposal-class-properties",
-        "@babel/proposal-object-rest-spread"
-    ]
+    "@babel/preset-typescript",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread"
+  ]
 }

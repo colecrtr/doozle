@@ -12,9 +12,11 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
         with:
-          node-version: '12.x'
-      - run: ( cd web && npm install && (npm start &) )
-      - run: cypress run --project=web
+          node-version: "12.x"
+      - name: Prettier Format Check
+        run: npm install && npx prettier --check .
+      - name: Cypress Test
+        run: ( cd web && npm install && (npm start &) ) && cypress run --project=web
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: test
@@ -23,7 +25,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
         with:
-          node-version: '12.x'
+          node-version: "12.x"
       - run: ( cd functions && npm install && npm run build )
       - run: ( cd web && npm install && npm run build )
       - uses: w9jds/firebase-action@master

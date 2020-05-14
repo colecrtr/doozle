@@ -1,0 +1,24 @@
+{
+  "name": "doozle",
+  "version": "1.0.0",
+  "description": "Doodle Puzzle game",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colecrtr/doozle.git"
+  },
+  "author": "Cole Carter",
+  "bugs": {
+    "url": "https://github.com/colecrtr/doozle/issues"
+  },
+  "homepage": "https://github.com/colecrtr/doozle",
+  "devDependencies": {
+    "husky": "^3.1.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
