@@ -20,8 +20,10 @@ class App extends React.PureComponent<any, IState> {
     async componentDidMount() {
         auth().onAuthStateChanged(async (user) => {
             if (user) {
-                const authUserProfile = await UserProfile.getOrCreate(user.uid);
+                const authUserProfilePromise = UserProfile.getOrCreate(user.uid);
+                trackPromise(authUserProfilePromise);
 
+                const authUserProfile = await authUserProfilePromise;
                 if (authUserProfile.exists) {
                     this.setState({ authUserProfile });
                 }
