@@ -4,6 +4,7 @@ import { Container, Columns, Column } from "bloomer";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Session from "./Session";
 import LoadingBar from "./LoadingBar";
+import { trackPromise } from "react-promise-tracker";
 import { auth } from "services/firebase";
 import UserProfile from 'models/UserProfile';
 
