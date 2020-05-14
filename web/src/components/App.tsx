@@ -8,7 +8,6 @@ import { trackPromise } from "react-promise-tracker";
 import { auth } from "services/firebase";
 import UserProfile from 'models/UserProfile';
 
-import './App.scss';
 interface IState {
     authUserProfile: null | UserProfile
 }
