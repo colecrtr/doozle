@@ -1,34 +1,37 @@
-import Model from "./Model";
-import { firebase, db } from "services/firebase";
+import Model from "models/Model";
+import { db } from "services/firebase";
 
 export default class UserProfile extends Model {
-  static collection: firebase.firestore.CollectionReference = db.collection(
-    "UserProfiles"
-  );
+  static collection = db.collection("UserProfiles");
 
-  constructor(readonly uid: null | string, readonly name: null | string) {
-    super(uid);
+  constructor(readonly id: string, readonly name: string) {
+    super(UserProfile.collection, id);
   }
 
-  static async get(uid: string): Promise<UserProfile> {
-    const docRef = UserProfile.collection.doc(uid);
+  static async get(id: string): Promise<UserProfile> {
+    const docRef = Model.getDocRef(UserProfile.collection, id);
+
     return super.getOrCallback(docRef, async () => {
       return docRef.get().then((doc) => {
-        let userProfileData = { name: null, ...doc.data() };
+        let userProfileData = { name: "", ...doc.data() };
 
-        return new UserProfile(doc.exists ? uid : null, userProfileData.name);
+        return new UserProfile(doc.exists ? id : "", userProfileData.name);
       });
     });
   }
 
-  static async getOrCreate(uid: string): Promise<UserProfile> {
-    const docRef = UserProfile.collection.doc(uid);
-    return this.get(uid).then((userProfile) => {
+  static async getOrCreate(id: string): Promise<UserProfile> {
+    const docRef = Model.getDocRef(UserProfile.collection, id);
+
+    return UserProfile.get(id).then((userProfile) => {
       if (!userProfile.exists) {
-        const defaultUserProfile = { name: uid.substring(0, 10) };
+        const defaultUserProfile = {
+          ...Model.getDefaultCreateFields(),
+          name: id.substring(0, 10),
+        };
 
         return docRef.set(defaultUserProfile, { merge: true }).then(() => {
-          return new UserProfile(uid, defaultUserProfile.name);
+          return new UserProfile(id, defaultUserProfile.name);
         });
       }
       return userProfile;

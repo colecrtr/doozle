@@ -1,5 +1,6 @@
 import * as React from "react";
 import { setTitle } from "helpers/title";
+import { getURL } from "helpers/location";
 import { auth } from "services/firebase";
 import {
   Title,
@@ -14,10 +15,10 @@ import {
 import { trackPromise } from "react-promise-tracker";
 
 interface IState {
-  isLoading: Boolean;
-  email: String;
-  isEmailInvalid: Boolean;
-  isEmailSent: Boolean;
+  isLoading: boolean;
+  email: string;
+  isEmailInvalid: boolean;
+  isEmailSent: boolean;
 }
 
 export default class Login extends React.Component<any, IState> {
@@ -42,7 +43,7 @@ export default class Login extends React.Component<any, IState> {
     this.setState({ isEmailInvalid: false, isLoading: true });
 
     const actionCodeSettings = {
-      url: `${window.location.protocol}//${window.location.host}/authenticate`,
+      url: getURL("/authenticate"),
       handleCodeInApp: true,
     };
     const sendEmailPromise = auth()

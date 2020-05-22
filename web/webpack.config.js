@@ -1,5 +1,6 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: "./src/index",
   output: {
@@ -25,14 +26,17 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(?:c|sc|sa)ss$/i,
         use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
+    new HtmlPlugin({
+      template: "./public/index.html",
+    }),
+    new CopyPlugin({
+      patterns: [{ from: "public/images", to: "images" }],
     }),
   ],
   optimization: {

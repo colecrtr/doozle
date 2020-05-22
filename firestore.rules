@@ -1,16 +1,45 @@
-rules_version = '2';
+rules_version = "2";
 service cloud.firestore {
   function userIsAuthenticated() {
     return request.auth.uid != null;
   }
-  function isAuthUser(uid) {
-    return userIsAuthenticated() && request.auth.uid == uid;
+  function isAuthUserId(id) {
+    return userIsAuthenticated() && request.auth.uid == id;
+  }
+  function isAuthUserRef(ref) {
+    return isAuthUserId(get(ref).id)
   }
 
   match /databases/{database}/documents {
     match /UserProfiles/{userId} {
+      allow write:
+        if isAuthUserId(userId) 
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 15;
+      allow update: if request.resource.data.createdAt == resource.data.createdAt;
       allow read: if userIsAuthenticated();
-      allow write: if isAuthUser(userId) && request.resource.data.name.size() <= 15;
+    }
+    
+    match /Doozles/{doozleId} {
+      // Create is allowed if the Doozle isn't already solved
+      allow create: if userIsAuthenticated() && request.resource.data.solved == false;
+      allow read: if true;
+    }
+
+    match /Answers/{answerId} {
+      allow create:
+        if request.resource.data.answer.matches("^(?:[A-Z0-9]+[ ]?)*$")
+        && request.resource.data.answer.size() > 0
+        && request.resource.data.answer.size() <= 50
+        && isAuthUserRef(request.resource.data.creator);
+      allow update:
+        // Update is allowed when adding the related Doozle ONLY; it is expected to happen moments after creation
+        if !("doozle" in resource.data) && "doozle" in request.resource.data
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.answer == resource.data.answer
+        && request.resource.data.creator == resource.data.creator
+        && isAuthUserRef(resource.data.creator);
+      allow read: if isAuthUserRef(resource.data.creator);
     }
 
     match /{document=**} {

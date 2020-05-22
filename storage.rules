@@ -1,7 +1,21 @@
+rules_version = "2";
 service firebase.storage {
+  function userIsAuthenticated() {
+    return request.auth.uid != null;
+  }
+  function isAuthUserId(id) {
+    return userIsAuthenticated() && request.auth.uid == id;
+  }
+
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth!=null;
+    match /doodles/{doodleId} {
+      allow create:
+        if resource == null  // Does not already exist
+        && isAuthUserId(request.resource.metadata.creatorId)  // Created by the authenticated user
+        && request.resource.size() < 5 * 1024 * 1024  // Less than 5MB
+        && request.resource.contentType == "image/svg+xml"  // Of type SVG
+        && doodleId.matches("[a-zA-Z0-9-_]+\\.svg$");  // Of type SVG
+      allow read: if true;
     }
   }
 }
