@@ -4,20 +4,20 @@ import { db } from "services/firebase";
 export default class UserProfile extends Model {
   static collection = db.collection("UserProfiles");
 
-  constructor(readonly id: string, readonly name: string) {
-    super(UserProfile.collection, id);
+  static async getFromRef(
+    ref: firebase.firestore.DocumentReference
+  ): Promise<UserProfile> {
+    return super.getOrCallback(ref, async () => {
+      return ref.get().then((doc) => {
+        let userProfileData = { name: "", ...doc.data() };
+
+        return new UserProfile(doc.exists ? ref.id : "", userProfileData.name);
+      });
+    });
   }
 
   static async get(id: string): Promise<UserProfile> {
-    const docRef = Model.getDocRef(UserProfile.collection, id);
-
-    return super.getOrCallback(docRef, async () => {
-      return docRef.get().then((doc) => {
-        let userProfileData = { name: "", ...doc.data() };
-
-        return new UserProfile(doc.exists ? id : "", userProfileData.name);
-      });
-    });
+    return UserProfile.getFromRef(Model.getDocRef(UserProfile.collection, id));
   }
 
   static async getOrCreate(id: string): Promise<UserProfile> {
@@ -36,6 +36,14 @@ export default class UserProfile extends Model {
       }
       return userProfile;
     });
+  }
+
+  static empty(): UserProfile {
+    return new UserProfile("", "");
+  }
+
+  constructor(readonly id: string, readonly name: string) {
+    super(UserProfile.collection, id);
   }
 
   get avatarSrc() {

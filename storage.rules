@@ -11,7 +11,7 @@ service firebase.storage {
     match /doodles/{doodleId} {
       allow create:
         if resource == null  // Does not already exist
-        && isAuthUserId(request.resource.metadata.creatorId)  // Created by the authenticated user
+        && isAuthUserId(request.resource.metadata.userId)  // Created by the authenticated user
         && request.resource.size() < 5 * 1024 * 1024  // Less than 5MB
         && request.resource.contentType == "image/svg+xml"  // Of type SVG
         && doodleId.matches("[a-zA-Z0-9-_]+\\.svg$");  // Of type SVG

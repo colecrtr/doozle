@@ -3,7 +3,7 @@ import { BarLoader } from "react-spinners";
 import { palette } from "theme";
 import { usePromiseTracker } from "react-promise-tracker";
 
-const LoadingBar = (_props: any) => {
+export const LoadingBar = (_props: any) => {
   const { promiseInProgress } = usePromiseTracker();
 
   return promiseInProgress ? (

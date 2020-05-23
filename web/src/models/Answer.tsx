@@ -6,17 +6,17 @@ import Doozle from "models/Doozle";
 export default class Answer extends Model {
   static collection = db.collection("Answers");
 
-  static async create(creator: UserProfile, answer: string) {
+  static async create(user: UserProfile, answer: string) {
     return Answer.collection
-      .add({ ...Model.getDefaultCreateFields(), creator: creator.ref, answer })
+      .add({ ...Model.getDefaultCreateFields(), user: user.ref, answer })
       .then((docRef) => {
-        return new Answer(docRef.id, creator, answer, undefined);
+        return new Answer(docRef.id, user, answer, undefined);
       });
   }
 
   constructor(
     readonly id: string,
-    readonly creator: UserProfile,
+    readonly user: UserProfile,
     readonly answer: string,
     doozle?: Doozle
   ) {
@@ -27,7 +27,7 @@ export default class Answer extends Model {
     return this.ref
       .update({ ...Model.getDefaultUpdateFields, doozle: doozle.ref })
       .then(() => {
-        return new Answer(this.id, this.creator, this.answer, doozle);
+        return new Answer(this.id, this.user, this.answer, doozle);
       });
   }
 }

@@ -50,7 +50,7 @@ export default class Creator extends React.Component<IProps, IState> {
     doodleSVGString: "",
   };
 
-  onAnswerChange(event: React.FormEvent<HTMLTextAreaElement>) {
+  onAnswerChange(event: React.ChangeEvent<HTMLInputElement>) {
     let answer = event.currentTarget.value.toUpperCase().substring(0, 50);
 
     if (/^(?:[A-Z0-9]+[ ]?)*$/.test(answer)) {

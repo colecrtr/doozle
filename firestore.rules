@@ -17,7 +17,7 @@ service cloud.firestore {
         && request.resource.data.name.size() > 0
         && request.resource.data.name.size() <= 15;
       allow update: if request.resource.data.createdAt == resource.data.createdAt;
-      allow read: if userIsAuthenticated();
+      allow read: if true;
     }
     
     match /Doozles/{doozleId} {
@@ -31,15 +31,27 @@ service cloud.firestore {
         if request.resource.data.answer.matches("^(?:[A-Z0-9]+[ ]?)*$")
         && request.resource.data.answer.size() > 0
         && request.resource.data.answer.size() <= 50
-        && isAuthUserRef(request.resource.data.creator);
+        && isAuthUserRef(request.resource.data.user);
       allow update:
         // Update is allowed when adding the related Doozle ONLY; it is expected to happen moments after creation
         if !("doozle" in resource.data) && "doozle" in request.resource.data
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.answer == resource.data.answer
-        && request.resource.data.creator == resource.data.creator
-        && isAuthUserRef(resource.data.creator);
-      allow read: if isAuthUserRef(resource.data.creator);
+        && request.resource.data.user == resource.data.user
+        && isAuthUserRef(resource.data.user);
+      allow read: if isAuthUserRef(resource.data.user);
+    }
+
+    match /Guesses/{guessId} {
+      allow create:
+        if request.resource.data.correct == false
+        && get(request.resource.data.doozle).data.solved == false
+        && get(request.resource.data.doozle).data.user != request.resource.data.user
+        && request.resource.data.guess.matches("^(?:[A-Z0-9]+[ ]?)*$")
+        && request.resource.data.guess.size() > 0
+        && request.resource.data.guess.size() <= 50
+        && isAuthUserRef(request.resource.data.user)
+      allow read: if true;
     }
 
     match /{document=**} {

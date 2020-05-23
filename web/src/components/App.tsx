@@ -9,6 +9,7 @@ import { auth } from "services/firebase";
 import UserProfile from "models/UserProfile";
 import Creator from "./Creator";
 import { isProduction } from "helpers/consts";
+import Solver from "./Solver";
 
 interface IState {
   authUserProfile?: UserProfile;
@@ -49,6 +50,16 @@ class App extends React.PureComponent<any, IState> {
                 <Switch>
                   <Route path="/login" component={Session} />
                   <Route path="/authenticate" component={Session} />
+                  <Route
+                    path="\/!:doozleId([-0-9A-Z_a-z]{20})"
+                    render={(props) => (
+                      <Solver
+                        {...props}
+                        authUserProfile={this.state.authUserProfile}
+                        doozleId={props.match.params.doozleId}
+                      />
+                    )}
+                  />
                   <Route
                     path="/"
                     render={(props) => (

@@ -2,13 +2,10 @@ import Model from "models/Model";
 import { db, storage } from "services/firebase";
 import UserProfile from "models/UserProfile";
 import Answer from "models/Answer";
+import Guess from "models/Guess";
 
 export default class Doozle extends Model {
   static collection = db.collection("Doozles");
-
-  constructor(readonly id: string, readonly creator: UserProfile) {
-    super(Doozle.collection, id);
-  }
 
   static getDefaultCreateFields() {
     return { ...super.getDefaultCreateFields(), solved: false };
@@ -19,24 +16,27 @@ export default class Doozle extends Model {
   }
 
   static async create(
-    creator: UserProfile,
+    user: UserProfile,
     answerString: string,
     doodleSVG: File
   ): Promise<Doozle> {
     /* Create Doozle Answer, create Doozle, upload Doozle doodle, update Answer with Doozle, and return Doozle. */
 
-    return Answer.create(creator, answerString).then(async (answerObj) => {
+    const answerHint = answerString.replace(/[A-Z0-9]/g, "_");
+
+    return Answer.create(user, answerString).then(async (answerObj) => {
       return Doozle.collection
         .add({
           ...Doozle.getDefaultCreateFields(),
-          creator: creator.ref,
+          user: user.ref,
           answer: answerObj.ref,
+          answerHint,
         })
         .then(async (docRef) => {
-          let doozle = new Doozle(docRef.id, creator);
+          const doozle = new Doozle(docRef.id, user, answerHint, [], false);
 
           return Doozle.getDoodleSVGStorageRef(doozle.id)
-            .put(doodleSVG, { customMetadata: { creatorId: creator.id } })
+            .put(doodleSVG, { customMetadata: { userId: user.id } })
             .then(async (_snapshot) => {
               return answerObj.update(doozle).then(async (_answerObj) => {
                 return doozle;
@@ -44,6 +44,20 @@ export default class Doozle extends Model {
             });
         });
     });
+  }
+
+  static empty(): Doozle {
+    return new Doozle("", UserProfile.empty(), "", [], false);
+  }
+
+  constructor(
+    readonly id: string,
+    readonly user: UserProfile,
+    readonly answerHint: string,
+    readonly guesses: Array<Guess>,
+    readonly solved: boolean
+  ) {
+    super(Doozle.collection, id);
   }
 
   get urlPath(): string {
