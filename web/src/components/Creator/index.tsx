@@ -62,14 +62,7 @@ export default class Creator extends React.Component<IProps, IState> {
     event.preventDefault();
     this.setState({ isLoading: true });
 
-    if (document.activeElement?.getAttribute("type") !== "submit") {
-      /* Prevent accidental submissions from hitting the enter key on elements other than the
-       * form's submit button. In user-testing with my girlfriend, this happened immediately
-       * somehow.
-       */
-      this.setState({ isLoading: false });
-      return;
-    } else if (this.props.authUserProfile === undefined) {
+    if (this.props.authUserProfile === undefined) {
       /* Prevent submisions from unauthenticated users. */
       window.alert("Please login before submitting Doozles...");
       this.setState({ isLoading: false });
@@ -148,6 +141,12 @@ export default class Creator extends React.Component<IProps, IState> {
                     />
                   )}
                 </Field>
+                <button type="submit" disabled style={{ display: "none" }}>
+                  {/* Prevent accidental submissions from hitting the enter key on elements other than the
+                   * form's submit button. In user-testing with my girlfriend, this happened immediately
+                   * somehow.
+                   */}
+                </button>
                 <Field>
                   <Control>
                     <Button
