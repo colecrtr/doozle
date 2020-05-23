@@ -104,9 +104,6 @@ export default class Solver extends React.Component<IProps, IState> {
       this.setState({ isGuessFormLoading: false });
       return;
     }
-    const alreadyGuessed: boolean = this.state.doozle.guesses.reduce(() => {
-      return true;
-    }, false);
 
     trackPromise(
       Guess.create(
