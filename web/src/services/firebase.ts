@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/app";
+import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
@@ -34,6 +35,7 @@ if (isProduction) {
 
 firebase.initializeApp(firebaseConfig);
 
+const analytics = firebase.analytics();
 const auth = firebase.auth;
 const db = firebase.firestore();
 const functions = firebase.functions();
@@ -48,4 +50,4 @@ if (!isProduction) {
   functions.useFunctionsEmulator("http://localhost:5001");
 }
 
-export { firebase, auth, db, functions, storage };
+export { firebase, analytics, auth, db, functions, storage };
