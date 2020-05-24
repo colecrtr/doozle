@@ -48,8 +48,15 @@ class App extends React.PureComponent<any, IState> {
             <Column isSize={{ desktop: 8, tablet: 10, mobile: 12 }}>
               <BrowserRouter>
                 <Switch>
-                  <Route path="/login" component={Session} />
-                  <Route path="/authenticate" component={Session} />
+                  <Route
+                    path="\/(login|authenticate)"
+                    render={(props) => (
+                      <Session
+                        {...props}
+                        authUserProfile={this.state.authUserProfile}
+                      />
+                    )}
+                  />
                   <Route
                     path="\/!:doozleId([-0-9A-Z_a-z]{20})"
                     render={(props) => (
