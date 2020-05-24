@@ -120,7 +120,14 @@ export default class Solver extends React.Component<IProps, IState> {
     return this.state.doozle.exists ? (
       <>
         <Title>Doozle by {this.state.doozle.user.name}</Title>
-        <Subtitle>ID: {this.state.doozle.id}</Subtitle>
+        <Level>
+          <LevelLeft>
+            <LevelItem>Share with players: </LevelItem>
+            <LevelItem>
+              <code>{window.location.href}</code>
+            </LevelItem>
+          </LevelLeft>
+        </Level>
         <Box
           style={{
             marginTop: "calc(1rem + 1vw)",
