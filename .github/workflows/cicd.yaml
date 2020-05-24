@@ -28,6 +28,10 @@ jobs:
           node-version: "12.x"
       - run: ( cd functions && npm install && npm run build )
       - run: ( cd web && npm install && npm run build )
+        env:
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only firestore,functions,hosting,storage
