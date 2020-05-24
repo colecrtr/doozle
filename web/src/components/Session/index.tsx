@@ -5,12 +5,12 @@ import Authenticate from "./Authenticate";
 import UserProfile from "models/UserProfile";
 
 interface IProps {
-  authUserProfile: UserProfile;
+  authUserProfile?: UserProfile;
 }
 
 export default class Session extends React.Component<IProps, any> {
   render() {
-    return !this.props.authUserProfile ? (
+    return this.props.authUserProfile ? (
       <Redirect to="/" />
     ) : (
       <Switch>
