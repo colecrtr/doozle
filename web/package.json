@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@sentry/browser": "^5.15.5",
     "bloomer": "^0.6.5",
     "firebase": "^7.14.2",
     "literallycanvas": "^0.5.2",
