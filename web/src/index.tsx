@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import App from "./components/App";
 import * as Sentry from "@sentry/browser";
 import { isProduction } from "helpers/consts";
+import App from "./components/App";
 
 Sentry.init({
   dsn:
