@@ -1,7 +1,10 @@
 const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const SentryPlugin = require("@sentry/webpack-plugin");
+
 module.exports = {
+  devtool: "source-map",
   entry: "./src/index",
   output: {
     path: path.join(__dirname, "/dist"),
@@ -37,6 +40,11 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [{ from: "public/images", to: "images" }],
+    }),
+    new SentryPlugin({
+      include: "dist",
+      ignore: ["node_modules", "webpack.config.js"],
+      configFile: path.resolve(__dirname, "sentry.properties"),
     }),
   ],
   optimization: {
