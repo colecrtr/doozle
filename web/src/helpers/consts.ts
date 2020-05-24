@@ -1,1 +1,2 @@
-export const isProduction = location.hostname === "doozle.web.app";
+export const isProduction: boolean =
+  window.location.hostname === "doozle.web.app";
