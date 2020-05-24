@@ -44,7 +44,6 @@ module.exports = {
     new SentryPlugin({
       include: "dist",
       ignore: ["node_modules", "webpack.config.js"],
-      configFile: path.resolve(__dirname, "sentry.properties"),
     }),
   ],
   optimization: {
