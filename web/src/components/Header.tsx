@@ -1,20 +1,24 @@
-import * as React from "react";
+import React from "react";
 import {
   Navbar,
   NavbarItem,
   NavbarBrand,
-  NavbarMenu,
   NavbarEnd,
   Button,
-  NavbarBurger,
+  Level,
+  LevelItem,
 } from "bloomer";
+import UserProfile from "models/UserProfile";
 
+interface IProps {
+  authUserProfile?: UserProfile;
+}
 interface IState {
   isBurgerMenuActive: Boolean;
 }
 
-export default class Header extends React.Component<any, IState> {
-  readonly state = { isBurgerMenuActive: false };
+export default class Header extends React.Component<IProps, IState> {
+  readonly state = { authUserProfile: undefined, isBurgerMenuActive: false };
 
   toggleBurgerMenu() {
     this.setState({ isBurgerMenuActive: !this.state.isBurgerMenuActive });
@@ -23,28 +27,42 @@ export default class Header extends React.Component<any, IState> {
   render() {
     return (
       <header>
-        <Navbar>
+        <Navbar style={{ display: "flex" }}>
           <NavbarBrand>
             <NavbarItem href="/" style={{ fontSize: "1.25rem" }}>
               Doozle
             </NavbarItem>
-            <NavbarBurger
-              isActive={this.state.isBurgerMenuActive}
-              onClick={this.toggleBurgerMenu.bind(this)}
-            />
           </NavbarBrand>
-          <NavbarMenu
-            isActive={this.state.isBurgerMenuActive}
-            onClick={this.toggleBurgerMenu.bind(this)}
+          <NavbarEnd
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginLeft: "auto",
+            }}
           >
-            <NavbarEnd>
-              <NavbarItem>
+            <NavbarItem style={{ display: "flex", alignItems: "center" }}>
+              {this.props.authUserProfile ? (
+                <Level>
+                  <LevelItem
+                    isHidden="mobile"
+                    style={{ marginRight: "0.5rem" }}
+                  >
+                    {this.props.authUserProfile.name}
+                  </LevelItem>
+                  <LevelItem>
+                    <img
+                      src={this.props.authUserProfile.avatarSrc}
+                      style={{ borderRadius: "1rem" }}
+                    />
+                  </LevelItem>
+                </Level>
+              ) : (
                 <Button href="/login" isColor="success">
                   Login / Register
                 </Button>
-              </NavbarItem>
-            </NavbarEnd>
-          </NavbarMenu>
+              )}
+            </NavbarItem>
+          </NavbarEnd>
         </Navbar>
       </header>
     );

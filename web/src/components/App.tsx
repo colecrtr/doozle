@@ -41,7 +41,7 @@ class App extends React.PureComponent<any, IState> {
   render() {
     return (
       <React.StrictMode>
-        <Header />
+        <Header authUserProfile={this.state.authUserProfile} />
         <LoadingBar />
         <Container isFluid style={{ marginTop: "3rem" }}>
           <Columns isCentered>
