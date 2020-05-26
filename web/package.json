@@ -6,8 +6,8 @@
   "scripts": {
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
     "check-types": "tsc src/index.tsx --jsx react"
   },
   "author": "Cole Carter",
@@ -27,6 +27,7 @@
     "@types/react-router-dom": "^5.1.4",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.0.1",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "html-webpack-plugin": "^4.2.0",
     "node-sass": "^4.14.1",

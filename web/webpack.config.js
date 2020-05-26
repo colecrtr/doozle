@@ -41,11 +41,13 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: "public/images", to: "images" }],
     }),
-    new SentryPlugin({
-      include: "dist",
-      ignore: ["node_modules", "webpack.config.js"],
-    }),
-  ],
+    process.env.NODE_ENV === "production"
+      ? new SentryPlugin({
+          include: "dist",
+          ignore: ["node_modules", "webpack.config.js"],
+        })
+      : false,
+  ].filter(Boolean),
   optimization: {
     splitChunks: {
       chunks: "all",
